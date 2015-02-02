@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>
+		Arena Application
+		{% block head %}
+		 	Main Page
+		{% endblock  %}
+		
+	</title>
+</head>
+<body>
+
+{% if curruser %}
+<div id="welcome" >
+	<h4> Hi {{curruser.name}} </h4>
+</div>
+{% endif %}
+
+
+<h2> Welcome to arena app </h2>
+	{% block  content %}
+
+	<ul>
+		<li>
+			<b> Register : </b> <a href="/account/register" > Page </a>
+		</li>
+	</ul>
+
+	{% endblock  %}
+
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block head %}
+	{{title}}
+
+{% endblock %}
+
+
+{% block content %} 
+	<form method="post" action="./register" >
+	{% csrf_token %}
+	<table>
+	{% for field in form %}
+
+		<tr>
+				<td>	{{field.name}} </td> 
+				<td>	 :			 </td> 
+				<td> 	{{field}}	 </td>
+		</tr>
+
+	{% endfor %}
+
+	<tr>
+		<td> <input type="submit" value="Register" />  </td>
+
+	</tr>
+
+	{% if error %}
+		{{error}}
+	{% endif %}
+
+	</table>
+
+	</form>
+
+{% endblock %}
