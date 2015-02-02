@@ -8,3 +8,9 @@ class RegisterForm(forms.Form):
 	CPassword = forms.CharField(label='Confirm Password',widget=forms.PasswordInput())
 	Email = forms.EmailField()
 	CEmail = forms.EmailField(label='Confirm Email')
+
+
+
+class LoginForm(forms.Form):
+	Username = forms.CharField(max_length=100)
+	Password = forms.CharField(widget=forms.PasswordInput())

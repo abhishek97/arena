@@ -11,9 +11,11 @@
 </head>
 <body>
 
-{% if curruser %}
+
+
+{% if user.username %}
 <div id="welcome" >
-	<h4> Hi {{curruser.name}} </h4>
+	<h4> Hi {{user.username}} </h4>
 </div>
 {% endif %}
 
@@ -24,6 +26,9 @@
 	<ul>
 		<li>
 			<b> Register : </b> <a href="/account/register" > Page </a>
+		</li>
+		<li>
+			<b> Login : </b> <a href="/account/login" > Page </a>
 		</li>
 	</ul>
 

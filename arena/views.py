@@ -3,4 +3,4 @@ from django.shortcuts import render
 
 class IndexView(View):
 	def get(self,request):
-		return render(request , 'base.html' )
+		return render(request , 'base.html' , { 'user' : request.user } )

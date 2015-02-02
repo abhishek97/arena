@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.views.generic import View
 from django.http import HttpResponseRedirect
-from forms import RegisterForm
+from forms import RegisterForm , LoginForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+from django.contrib.auth import authenticate
 
 
 class RegisterView(View):
@@ -42,5 +43,22 @@ class RegisterView(View):
 			return render(request , 'register.html' , { 'form' : newForm , 'error' : 'Invalid Data' } )
 
 
+class LoginView(View):
+	def get(self,request):
+		newForm = LoginForm()
+		return render(request , 'login.html' , { 'form' : newForm } )
 
-# Create your views here.
+	def post(self, request):
+		form = LoginForm(request.POST)
+
+		if form.is_valid() :
+			this = form.cleaned_data
+			user = authenticate(username=this.get('Username') ,password =this.get('Password') )
+
+			if user is not None :
+				return render(request , 'logged.html' , {'user' : user} )
+			else :
+				return render(request , 'login.html' , {'form' : LoginForm() , 'error' : 'Invalid Username/Password Combination'} )
+		else :
+			return render(request , 'login.html' , {'form' : form ,'error' : 'Invalid Username/Password Combination'} )
+
