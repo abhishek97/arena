@@ -18,10 +18,17 @@ class RegisterView(View):
 		
 		if form.is_valid() :
 			this = form.cleaned_data
+
+			if this.get('Email') != this.get('CEmail') :
+				return render(request , 'register.html' , { 'form' : RegisterForm() , 'error' : 'Emails Doesnot Match!' } )
+
+			if this.get('Password') != this.get('CPassword') :
+				return render(request , 'register.html' , { 'form' : RegisterForm(this) , 'error' : "Passwords Don't Match!" } )
+
 			try :
 				user = User.objects.create_user(this.get('Username') , this.get('Email') , this.get('Password') )
 			except IntegrityError :
-				return render(request , 'register.html' , { 'form' : RegisterForm() , 'error' : 'Invalid Data' } )
+				return render(request , 'register.html' , { 'form' : RegisterForm() , 'error' : 'The UserName Already exists!' } )
 
 			user.first_name = this.get('FirstName')
 			user.last_name = this.get('LastName')
