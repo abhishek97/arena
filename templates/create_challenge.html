@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+
+{%block head%}
+
+Challenge
+
+{%endblock%}
+
+{% block content %}
+
+	<form method="post" action="/challenge/create" >
+		
+		{% csrf_token %}
+
+		{{form.as_p}}
+
+		<p>
+			<input type="submit" value="Challenege" />
+		</p>
+
+	</form>
+
+	{%if error%}
+	<p>
+		{{error}}
+	</p>
+	{%endif%}
+
+{%endblock%}
