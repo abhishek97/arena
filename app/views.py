@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from forms import RegisterForm , LoginForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate , login , logout
 
 
 class RegisterView(View):
@@ -56,9 +56,16 @@ class LoginView(View):
 			user = authenticate(username=this.get('Username') ,password =this.get('Password') )
 
 			if user is not None :
+				login(request , user);
 				return render(request , 'logged.html' , {'user' : user} )
 			else :
 				return render(request , 'login.html' , {'form' : LoginForm() , 'error' : 'Invalid Username/Password Combination'} )
 		else :
 			return render(request , 'login.html' , {'form' : form ,'error' : 'Invalid Username/Password Combination'} )
 
+
+
+class LogoutView(View):
+	def get(self,request):
+		logout(request)
+		return render(request , 'logout.html' )

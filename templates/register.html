@@ -7,30 +7,40 @@
 
 
 {% block content %} 
-	<form method="post" action="./register" >
-	{% csrf_token %}
-	<table>
-	{% for field in form %}
+	{% if not user.is_authenticated %}
+
+		<form method="post" action="./register" >
+		{% csrf_token %}
+		<table>
+		{% for field in form %}
+
+			<tr>
+					<td>	{{field.label}} </td> 
+					<td>	 :			 </td> 
+					<td> 	{{field}}	 </td>
+			</tr>
+
+		{% endfor %}
 
 		<tr>
-				<td>	{{field.label}} </td> 
-				<td>	 :			 </td> 
-				<td> 	{{field}}	 </td>
+			<td> <input type="submit" value="Register" />  </td>
+
 		</tr>
 
-	{% endfor %}
+		{% if error %}
+			{{error}}
+		{% endif %}
 
-	<tr>
-		<td> <input type="submit" value="Register" />  </td>
+		</table>
 
-	</tr>
+		</form>
 
-	{% if error %}
-		{{error}}
+	{% else %}
+
+		<p>
+			<strong> You are already logged in. </strong>
+		</p>
+
 	{% endif %}
-
-	</table>
-
-	</form>
 
 {% endblock %}

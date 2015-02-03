@@ -9,18 +9,25 @@
 
 
 {% block content %}
+	
+	{% if not user.is_authenticated %}
+		<form method="post" action="./login" >
+		{% csrf_token %}
 
-	<form method="post" action="./login" >
-	{% csrf_token %}
-
-	{{form.as_p}}
+		{{form.as_p}}
 
 
-	<p>
-		<input type="submit" value="Log in" />
-	</p>
+		<p>
+			<input type="submit" value="Log in" />
+		</p>
 
-	</form>
+		</form>
+	{% else %}
+		<p>
+			<strong>You are already logged in.</strong>
+		</p>
+
+	{% endif %}
 
 
 {% endblock %}
