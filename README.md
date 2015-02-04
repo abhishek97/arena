@@ -9,8 +9,8 @@ For Windows :
 2. Continue to Usage section
 
 For Linux:
-1. `sudo apt-get install python-pip`
 
+1. `sudo apt-get install python-pip`
 2. `sudo pip install django`
 
 
