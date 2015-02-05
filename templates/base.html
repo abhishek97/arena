@@ -13,10 +13,24 @@
 
 
 
-{% if user.username %}
+{% if user.is_authenticated %}
 <div id="welcome" >
 	<h4> Hi {{user.username}} </h4>
 </div>
+
+<div id="navbar">
+
+<ul>
+	<li>
+		<a href="/challenge/create"> New Challenge </a>
+	</li>
+	<li>
+		<a href="/challenge/all"> View Challenges </a>
+	</li>
+</ul>
+
+</div>
+
 {% endif %}
 
 

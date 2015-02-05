@@ -3,5 +3,7 @@ from views import *
 
 urlpatterns = patterns('/',
 
-	url(r'create', CreateView.as_view() )
+	url(r'create', CreateView.as_view() ),
+	url(r'all', AllView.as_view() ),
+	url(r'accept', AcceptView.as_view() ),
 	)

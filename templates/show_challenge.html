@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div  id="filter box">
+	<strong>Search: </strong></div> </br>
+	<form method="post" action="/challenge/all" >
+		{% csrf_token %}
+		{{form.as_p}}
+		<p>
+			<input type="submit" value="Apply" />
+		</p>
+	</form>
+</div>
+
+{% if error %}
+	<div class="errors">
+			{{error}}
+	</div>
+{% endif %}
+
+{% if results %}  
+	<div id="result box">
+	<table>
+		<tr>
+			<td> From </td>
+			<td> Contest </td>
+			<td> Contest Starts at </td>
+			<td> Contest ends at </td>
+		</tr>
+
+		{% for result in results  %}
+		<tr>
+			<div class="result record">
+			<form method="post" action="/challenge/accept">
+				{% csrf_token %}
+
+				<td>
+					<input type="hidden" maxlength="50" name="frm" value="{{result.frm}}"  />
+					{{result.frm}}
+				</td>
+				<td>
+					<input type="hidden" maxlength="50" name="contest" value="{{result.contest}}"/>
+					{{result.contest}}
+				</td>
+				<td>
+					<input type="hidden" maxlength="50" name="to" value="{{user.username}}"  />
+					{{result.time}}
+				</td>
+				<td>
+					{{result.expire}}
+				</td>
+				<td>
+					{{result.form}}
+				</td>
+				<td>
+					{% if not result.resolved %}
+				 		<input type="submit" value="Accept" />
+				 	{% else %}
+				 		Accepted by you
+				 	{% endif %}
+					
+				</td>
+
+			</form>
+			</div>
+		</tr>
+		{% endfor %}
+
+	</div>
+
+{% endif %}
+
+
+
+
+{% endblock content %}
