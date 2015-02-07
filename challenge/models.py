@@ -25,3 +25,14 @@ class Contest(models.Model):
 	start = models.DateTimeField(default=datetime.now())
 	end   = models.DateTimeField(default=datetime.now())
 
+class Notification(models.Model):
+
+	def __str__(self):
+		return self.user + ' : ' + self.title 
+
+	#TODO : Add more context to Notification regarding what it is about and build content var
+	user = models.CharField(max_length=50)
+	seen = models.BooleanField(default=False)
+	content = models.TextField(default='')
+	title = models.CharField(max_length=300)
+	time  = models.DateTimeField(default=datetime.now())

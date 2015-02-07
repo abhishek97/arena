@@ -1,7 +1,7 @@
 from django.shortcuts import render , HttpResponseRedirect
 from django.views.generic import View
 from forms import CreateForm , FilterForm , AcceptForm
-from models import Challenge , Contest
+from models import Challenge , Contest , Notification
 from datetime import datetime
 from django.db import InternalError,IntegrityError
 from django.contrib.auth.models import User
@@ -38,6 +38,12 @@ class CreateView(View):
 				con = q_con[0]  
 				ch   = Challenge.objects.create(frm=request.user.username,to=this.get('to'),contest=con.code,expire=con.end,time=datetime.now())
 			except (InternalError,IntegrityError):
+				return render(request ,  'create_challenge.html' , { 'form' : form , 'error' : 'Internal Server Error 500, Please try again.' } )
+
+			#Create a New Notification
+			try:
+				notif  = Notification.objects.create(user=this.get('to'),title='You have been challenged by ' + request.user.username )
+			except (InternalError):
 				return render(request ,  'create_challenge.html' , { 'form' : form , 'error' : 'Internal Server Error 500, Please try again.' } )
 
 			return render(request , 'created_challenge.html' , { 'challenge' : ch , 'contest' : con } )
@@ -101,8 +107,10 @@ class AcceptView(View):
 
 		if len(obj) :
 			obj[0].resolved = True
+			#Create a New Notification
 			try :
 				obj[0].save()
+				notif  = Notification.objects.create(user=this.get('frm'),title='Your Challenge is accepted by ' + request.user.username )
 			except(InternalError):
 				render(request , 'show_challenge.html' , {'form' : FilterForm() , 'error' : 'Internal Server Error' } )
 		else :
@@ -110,3 +118,15 @@ class AcceptView(View):
 		
 		return HttpResponseRedirect('/challenge/all')
 
+class NotificationView(View):
+
+	def get(self,request):
+		
+		if not request.user.is_authenticated():
+			return render(request , 'unauthorised.html' )
+
+		q_set = Notification.objects.filter(user=request.user.username)
+		if len(q_set):
+			return render(request , 'show_notification.html' , {'notifications' : q_set } )	
+		else :
+			return render(request , 'show_notification.html' , {'error' : 'No Notifications' } )	

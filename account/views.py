@@ -34,9 +34,7 @@ class RegisterView(View):
 			user.first_name = this.get('FirstName')
 			user.last_name = this.get('LastName')
 			user.save()
-
-			return render(request , 'registered.html' , { 'user' : user } )
-
+			return render(request , 'registered.html' , { 'newuser' : user } )
 
 		else:
 			newForm = RegisterForm()
