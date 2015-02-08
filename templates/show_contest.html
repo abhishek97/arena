@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block head %}
+	
+	{% if error %}
+		Error
+	{% else %}
+
+		Contest : {{contest.code}}
+	{% endif %}
+	
+{% endblock head %}
+
+{% block content %}
+
+{% if error %}
+	<p>
+		{{error}}
+	</p>
+{% else %}
+	<p>
+		<h2> {{contest.title}} </h2>
+
+		<p>
+		{% autoescape off %}
+			{{contest.content}}
+		{% endautoescape %}
+			
+		</p>
+		<p>
+			Code : {{contest.code}}
+		</p>
+		<p>
+			Link : {{contest.url}}
+		</p>
+		<p>
+			Start : {{contest.start}}
+		</p>
+	</p>
+{% endif %}
+	
+{% endblock content %}

@@ -130,3 +130,15 @@ class NotificationView(View):
 			return render(request , 'show_notification.html' , {'notifications' : q_set } )	
 		else :
 			return render(request , 'show_notification.html' , {'error' : 'No Notifications' } )	
+
+class ContestView(View):
+
+	def get(self,request, contest_code ):
+
+		q_set = Contest.objects.filter(code=contest_code)
+		
+		if len(q_set):
+			return render(request ,'show_contest.html' , {'contest' : q_set[0] })
+		else :
+			return render(request , 'show_contest.html' , {'error' : 'No contest with that code found'} )
+
